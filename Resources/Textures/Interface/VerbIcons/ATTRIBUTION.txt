@@ -7,3 +7,13 @@ https://game-icons.net/1x1/lorc/padlock.html
 
 unlock.svg by Delapouite under CC BY 3.0
 https://game-icons.net/1x1/delapouite/padlock-open.html
+
+plant-dna-64px.png / plant-dna-highres.pdn composited from:
+	leaf.svg from Ficons under CC BY 3.0
+	https://github.com/fiction-com/ficons/blob/master/src/ficons/leaf.svg
+	
+	165-leaf.svg from IcoMoon-Free under CC BY 4.0
+	https://github.com/Keyamoon/IcoMoon-Free/blob/master/SVG/165-leaf.svg
+	
+	DNA.svg from icons under ISC
+	https://github.com/file-icons/icons/blob/master/svg/DNA.svg

@@ -28,6 +28,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Botany.Systems;
 
@@ -46,6 +48,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
 
 
     public const float HydroponicsSpeedMultiplier = 1f;
@@ -55,6 +58,7 @@ public sealed class PlantHolderSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<PlantHolderComponent, GetVerbsEvent<ExamineVerb>>(OnExaminableVerb);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PlantHolderComponent, SolutionTransferSuccessEvent>(OnSolutionAdded);
@@ -152,6 +156,34 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
+    private void OnExaminableVerb(Entity<PlantHolderComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
+    {
+        var target = args.Target;
+        var user = args.User;
+        var verb = new ExamineVerb()
+        {
+            Act = () =>
+            {
+                var markup = GetPlantExamine();
+                _examineSystem.SendExamineTooltip(user, target, markup, false, false);
+            },
+            Text = "plant traits",
+            Message = "description",
+            Category = VerbCategory.Examine,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/plant-dna-64px.png")),
+        };
+
+        //args.Verbs.Add(verb);
+    }
+
+    private FormattedMessage GetPlantExamine()
+    {
+        var msg = new FormattedMessage();
+
+        msg.AddMarkup("amogus from basin");
+
+        return msg;
+    }
     private void OnInteractUsing(Entity<PlantHolderComponent> entity, ref InteractUsingEvent args)
     {
         var (uid, component) = entity;

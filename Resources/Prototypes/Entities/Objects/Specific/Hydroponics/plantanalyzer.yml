@@ -1,0 +1,19 @@
+- type: entity
+  id: HandheldPlantAnalyzer
+  parent: BaseItem
+  name: plant analyzer
+  description: Allows you to see information about a plant's status and traits at a glance.
+  components:
+  - type: Sprite
+    sprite: Objects\Specific\Hydroponics\plantanalyzer.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: analyzer
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Item
+    storedRotation: -90
+  - type: PlantAnalyzer
+
